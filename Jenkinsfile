@@ -109,6 +109,14 @@ pipeline{
                    dockerImageCleanup("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
                }
             }
+        }   
+        stage('Upload jar in artifactory : DockerHub '){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
+                   sh 'curl -X PUT -u admin -T ./target/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar http://localhost:8082/artifactory/new_jar/'
+               }
+            }
         }      
     }
 }
