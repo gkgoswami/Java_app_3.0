@@ -18,6 +18,8 @@ pipeline{
                     when { expression {  params.action == 'create' } }
             steps{
             gitCheckout(
+                def currentDir = pwd()
+                println "Current dir : ${currentDir}"
                 branch: "main",
                 url: "https://github.com/gkgoswami/Java_app_3.0.git"
             )
@@ -76,6 +78,8 @@ pipeline{
          when { expression {  params.action == 'create' } }
             steps{
                script{
+                   def currentDir = pwd()
+                   println "Current dir : ${currentDir}"
                    
                    dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
                }
